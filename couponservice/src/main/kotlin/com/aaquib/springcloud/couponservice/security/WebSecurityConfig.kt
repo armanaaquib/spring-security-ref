@@ -20,10 +20,19 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
     }
 
     override fun configure(http: HttpSecurity) {
-        http.httpBasic()
-        http.authorizeRequests().mvcMatchers(HttpMethod.GET, "/coupon/api/coupons/{code:^[A-Z]*$}").hasAnyRole("USER", "ADMIN")
-            .antMatchers(HttpMethod.POST, "/coupon/api/coupons").hasRole("ADMIN").anyRequest().denyAll().and().csrf()
-            .disable()
+        http.formLogin()
+        http.authorizeRequests()
+            .mvcMatchers(
+                HttpMethod.GET,
+                "/",
+                "/coupon/api/coupons/{code:^[A-Z]*$}",
+                "/showGetCoupon"
+            ).hasAnyRole("USER", "ADMIN")
+            .antMatchers(HttpMethod.POST, "/getCoupon").hasAnyRole("USER", "ADMIN")
+            .antMatchers(HttpMethod.GET, "/showCreateCoupon").hasRole("ADMIN")
+            .antMatchers(HttpMethod.POST, "/coupon/api/coupons", "/saveCoupon").hasRole("ADMIN")
+            .anyRequest().denyAll()
+            .and().csrf().disable()
     }
 
     @Bean

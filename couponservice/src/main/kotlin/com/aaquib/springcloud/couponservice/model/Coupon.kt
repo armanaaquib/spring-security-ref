@@ -10,7 +10,7 @@ import javax.persistence.Id
 data class Coupon(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Long?,
     val code: String,
     val discount: BigDecimal,
     val expDate: String
