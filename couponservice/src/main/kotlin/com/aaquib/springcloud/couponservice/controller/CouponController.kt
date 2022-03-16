@@ -10,9 +10,6 @@ import org.springframework.web.servlet.ModelAndView
 @Controller
 class CouponController(private val couponRepo: CouponRepo) {
 
-    @GetMapping("/")
-    fun index() = "index"
-
     @GetMapping("/showCreateCoupon")
     fun showCreateCoupon() = "createCoupon"
 
